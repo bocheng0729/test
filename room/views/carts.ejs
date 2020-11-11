@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>購物車列表</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	
+
+    <a href="/cart/cart">商品列表</a>
+    <h1 class=room>購物車列表</h1>
+    
+    <form id='myform' method='POST' action='#'>
+        <ul>
+            
+            <% for(var i = 0; i < result.length; i++) { %>
+            <li>
+                商品：<input type="text" name="Pname" value=<%= result[i].Pname %> readonly="readonly">
+            	單價：<input type="text" id="money_id<%=i%>"  name="money_id" value=<%= result[i].moneyId %> readonly="readonly">
+                
+                <input id="min<%=i%>" name="" type="button" value="-"/>
+				<input id="num<%=i%>" name="" type="text" value="1" readonly="readonly"/>
+				<input id="add<%=i%>" name="" type="button" value="+"/>
+				<input id="test<%=i%>" type="text" readonly="readonly" value="0" disabled/>
+				
+				<script> 
+
+					$(function(){
+						var t = $("#num<%=i%>");
+						$("#add<%=i%>").click(function(){
+							t.val(parseInt(t.val())+1);
+							$("#min<%=i%>").removeAttr("disabled");                 //當按加1時，解除$("#min")不可讀狀態
+							//setTotal();
+					})
+						$("#min<%=i%>").click(function(){
+							   if (parseInt(t.val())>1) {                     //判斷數量值大於1時才可以減少
+								   t.val(parseInt(t.val())-1)
+							}else{
+								$("#min<%=i%>").attr("disabled","disabled")        //當$("#min")為1時，$("#min")不可讀狀態
+							   }
+						//setTotal();
+					})
+						/*
+					function setTotal(){
+						$("#total").html((parseInt(t.val())*$("#money_id<%=i%>")));
+						
+					}
+					setTotal();
+					*/
+					function test(){
+						var x = $("#test<%= i %>");
+						var n = 0;
+						n = $("#money_id<%= i %>")*$("#num<%= i %>") + n;
+						x.val(parseInt(x.val())+n);
+					}
+					test();
+
+
+				})
+			
+				</script>
+                
+				<button type="submit" name="carts" value=<%= result[i]._id%>>刪除</button>
+				
+            </li>
+            <% } %>
+		</ul>
+		
+		<p>總金額：<input id="total" type="number" onchange="setTotal()">元</p>		
+    </form>
+    </br>
+ 
+    
+    
+<% include footer %>

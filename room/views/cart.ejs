@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>商品列表</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <a href="/cart/carts">購物車</a>
+    <h1 class=room>商品列表：</h1>
+    <form method="post">
+    <ul>
+        <% for(var i = 0; i < result.length; i++) { %>
+            <li>
+            商品：<input type="text" name="Pname" value=<%= result[i].Pname %> readonly="readonly">
+            價錢：<input type="text" name="money_id" value=<%= result[i].moneyId %> readonly="readonly">
+            <input hidden type="text" name="_id" value=<%= result[i]._id %>>
+            <input type="radio" name='num' value=<%= i %>>
+            </li>
+        <% } %>
+    </ul>
+    
+    <button type="submit">加入購物車</button>
+
+    </form>
+    </br>
+    
+    
+    
+<% include footer %>
